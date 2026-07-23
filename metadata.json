@@ -1,0 +1,6 @@
+{
+  "name": "Pauls Digital Studio",
+  "description": "AI-Powered Web Development & Digital Marketing Agency",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
