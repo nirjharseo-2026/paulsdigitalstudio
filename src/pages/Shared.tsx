@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 export function PlaceholderPage({ title, description }: { title: string, description: string }) {
   return (

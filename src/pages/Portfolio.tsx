@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useCMS } from '../context/CMSContext';
 import { ArrowUpRight, FolderGit2 } from 'lucide-react';
 import { Link } from 'react-router-dom';

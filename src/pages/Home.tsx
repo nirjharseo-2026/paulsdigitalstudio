@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { ArrowRight, CheckCircle2, Bot, Code, LineChart, Globe, Zap, Smartphone, Search, Users, Star, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { CheckCircle2, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 

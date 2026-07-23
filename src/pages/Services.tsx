@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Globe, Search, LineChart, Bot, Smartphone, Code, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
