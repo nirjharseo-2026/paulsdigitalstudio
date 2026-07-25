@@ -57,7 +57,7 @@ const defaultPosts: BlogPost[] = [
 const defaultSettings: SiteSettings = {
   siteName: 'Pauls Digital Studio',
   tagline: 'AI-Powered Web Development',
-  contactEmail: 'hello@paulsdigital.com',
+  contactEmail: 'paulsdigitalstudio.info@gmail.com',
   primaryColor: '#5B5CEB'
 };
 

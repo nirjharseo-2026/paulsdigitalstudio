@@ -146,7 +146,7 @@ export function Layout() {
                 <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-heading font-bold">
                   P
                 </div>
-                <span className="font-heading font-bold text-lg">Pauls Digital</span>
+                <span className="font-heading font-bold text-lg">Pauls Digital Studio</span>
               </Link>
               <p className="text-muted-foreground text-sm leading-relaxed">
                 Helping businesses grow with AI-powered websites, digital marketing, automation, and modern technology.

@@ -11,6 +11,7 @@ import { Blog } from './pages/Blog';
 import { Contact } from './pages/Contact';
 import { Services } from './pages/Services';
 import { Pricing } from './pages/Pricing';
+import { About } from './pages/About';
 import { PlaceholderPage, NotFound } from './pages/Shared';
 import { Dashboard } from './admin/Dashboard';
 import { ProjectsManager } from './admin/ProjectsManager';
@@ -24,7 +25,7 @@ export default function App() {
           {/* Public Routes */}
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="about" element={<PlaceholderPage title="About Us" description="Learn more about our mission, vision, and the team behind Pauls Digital Studio." />} />
+            <Route path="about" element={<About />} />
             <Route path="services" element={<Services />} />
             <Route path="portfolio" element={<Portfolio />} />
             <Route path="pricing" element={<Pricing />} />
