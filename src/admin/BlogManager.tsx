@@ -13,6 +13,7 @@ export function BlogManager() {
     category: '',
     date: '',
     excerpt: '',
+    content: '',
     image: '',
     status: 'Draft'
   });
@@ -24,6 +25,7 @@ export function BlogManager() {
       category: post.category || '',
       date: post.date || '',
       excerpt: post.excerpt || '',
+      content: post.content || '',
       image: post.image || '',
       status: post.status || 'Draft'
     });
@@ -35,7 +37,7 @@ export function BlogManager() {
   const handleCancel = () => {
     setIsAdding(false);
     setIsEditing(null);
-    setFormData({ title: '', slug: '', category: '', date: '', excerpt: '', image: '', status: 'Draft' });
+    setFormData({ title: '', slug: '', category: '', date: '', excerpt: '', content: '', image: '', status: 'Draft' });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -150,6 +152,19 @@ export function BlogManager() {
                   onChange={e => setFormData({...formData, excerpt: e.target.value})}
                   className="w-full pl-10 pr-4 py-2 rounded-lg bg-muted border border-border focus:outline-none focus:ring-2 focus:ring-primary/50"
                   placeholder="Write a brief excerpt..."
+                />
+              </div>
+            </div>
+            <div className="space-y-2 md:col-span-2">
+              <label className="text-sm font-medium">Content</label>
+              <div className="relative">
+                <FileText className="absolute left-3 top-2.5 w-5 h-5 text-muted-foreground" />
+                <textarea 
+                  rows={10}
+                  value={formData.content || ''}
+                  onChange={e => setFormData({...formData, content: e.target.value})}
+                  className="w-full pl-10 pr-4 py-2 rounded-lg bg-muted border border-border focus:outline-none focus:ring-2 focus:ring-primary/50 font-mono text-sm"
+                  placeholder="Write the full blog post content here (Markdown supported)..."
                 />
               </div>
             </div>

@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { ArrowRight, CheckCircle2, Bot, Code, LineChart, Globe, Zap, Smartphone, Search, Users, Star, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useCMS } from '../context/CMSContext';
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -17,6 +18,8 @@ const staggerContainer = {
 };
 
 export function Home() {
+  const { siteContent } = useCMS();
+  const { home } = siteContent;
   return (
     <div className="flex flex-col gap-24 md:gap-32 pb-24 overflow-hidden">
       
@@ -46,7 +49,7 @@ export function Home() {
                   animate: { transition: { staggerChildren: 0.1 } }
                 }}
               >
-                {['Transform', 'Your'].map((word, idx) => (
+                {[home.heroTitle1, home.heroTitle2].filter(Boolean).map((word, idx) => (
                   <motion.span 
                     key={idx}
                     variants={{
@@ -76,7 +79,7 @@ export function Home() {
               
               <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4">
                 <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-8 py-4 rounded-xl font-bold text-md hover:-translate-y-0.5 transition-all shadow-xl group">
-                  Start Your Project
+                  {home.ctaPrimary}
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link to="/portfolio" className="inline-flex items-center justify-center gap-2 bg-card border border-border text-muted-foreground px-8 py-4 rounded-xl font-semibold text-md hover:bg-muted transition-all">

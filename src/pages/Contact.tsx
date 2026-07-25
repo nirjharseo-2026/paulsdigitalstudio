@@ -1,8 +1,11 @@
 import { motion } from 'motion/react';
 import { Mail, MessageSquare, Phone, MapPin, Send } from 'lucide-react';
 import { useState } from 'react';
+import { useCMS } from '../context/CMSContext';
 
 export function Contact() {
+  const { siteContent } = useCMS();
+  const { contact } = siteContent;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -24,7 +27,7 @@ export function Contact() {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-5xl font-heading font-bold mb-6"
           >
-            Let's build something <span className="text-gradient">amazing</span>
+            Let's build something <span className="text-gradient">{contact.heroTitleHighlight}</span>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}

@@ -17,6 +17,7 @@ import { PlaceholderPage, NotFound } from './pages/Shared';
 import { Dashboard } from './admin/Dashboard';
 import { ProjectsManager } from './admin/ProjectsManager';
 import { BlogManager } from './admin/BlogManager';
+import { PagesManager } from './admin/PagesManager';
 import { CMSProvider } from './context/CMSContext';
 
 export default function App() {
@@ -46,6 +47,7 @@ export default function App() {
             <Route index element={<Dashboard />} />
             <Route path="projects" element={<ProjectsManager />} />
             <Route path="blog" element={<BlogManager />} />
+            <Route path="pages" element={<PagesManager />} />
             <Route path="settings" element={<div className="p-8 text-center glass rounded-3xl mt-12">Settings panel coming soon.</div>} />
           </Route>
         </Routes>

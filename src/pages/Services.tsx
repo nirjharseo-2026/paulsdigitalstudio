@@ -1,8 +1,11 @@
 import { motion } from 'motion/react';
 import { Globe, Search, LineChart, Bot, Smartphone, Code, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useCMS } from '../context/CMSContext';
 
 export function Services() {
+  const { siteContent } = useCMS();
+  const { services: servicesContent } = siteContent;
   const services = [
     { icon: Globe, title: 'AI Website Development', desc: 'Custom, high-converting websites built with modern frameworks and AI workflows for lightning-fast delivery.', features: ['Custom React Development', 'Headless CMS Integration', 'Performance Optimization', 'AI-assisted Content'] },
     { icon: Search, title: 'SEO & Content Marketing', desc: 'Dominate search results with data-driven on-page and technical SEO strategies.', features: ['Technical SEO Audits', 'Keyword Strategy', 'Content Generation', 'Link Building'] },
@@ -22,16 +25,14 @@ export function Services() {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-6"
           >
-            Digital Solutions for the <span className="text-gradient">AI Era</span>
+            Digital Solutions for the <span className="text-gradient">{servicesContent.heroTitleHighlight}</span>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto"
-          >
-            We leverage cutting-edge technology and artificial intelligence to deliver solutions that drive measurable growth.
-          </motion.p>
+          >{servicesContent.heroDesc}</motion.p>
         </div>
       </section>
 

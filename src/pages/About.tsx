@@ -1,7 +1,10 @@
 import { motion } from 'motion/react';
+import { useCMS } from '../context/CMSContext';
 import { Target, Eye, Users, Heart, Zap, Shield, CheckCircle2, Handshake } from 'lucide-react';
 
 export function About() {
+  const { siteContent } = useCMS();
+  const { about } = siteContent;
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0, transition: { duration: 0.6 } }
@@ -36,7 +39,7 @@ export function About() {
           </motion.div>
           <motion.h1 variants={fadeIn} className="text-4xl md:text-6xl font-heading font-extrabold leading-[1.1] mb-6 text-foreground">
             Building the Future of <br className="hidden md:block"/>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">Digital Experiences</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">{about.heroTitleHighlight}</span>
           </motion.h1>
           <motion.p variants={fadeIn} className="text-lg md:text-xl text-muted-foreground leading-relaxed">
             Pauls Digital Studio is a modern AI-powered web development and digital marketing agency dedicated to helping businesses build a powerful online presence.

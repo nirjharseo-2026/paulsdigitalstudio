@@ -1,8 +1,11 @@
 import { motion } from 'motion/react';
 import { CheckCircle2, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useCMS } from '../context/CMSContext';
 
 export function Pricing() {
+  const { siteContent } = useCMS();
+  const { pricing } = siteContent;
   const plans = [
     {
       name: "Starter",

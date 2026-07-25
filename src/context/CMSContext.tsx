@@ -17,6 +17,7 @@ export interface BlogPost {
   category: string;
   date: string;
   excerpt: string;
+  content?: string;
   image?: string;
   status: 'Published' | 'Draft';
 }
@@ -28,7 +29,18 @@ interface SiteSettings {
   primaryColor: string;
 }
 
+
+export interface PageContentData {
+  [key: string]: string;
+}
+
+export interface SiteContent {
+  [page: string]: PageContentData;
+}
+
 interface CMSContextType {
+  siteContent: SiteContent;
+  updateSiteContent: (page: string, data: PageContentData) => void;
   projects: Project[];
   setProjects: (projects: Project[]) => void;
   addProject: (project: Project) => void;
@@ -58,6 +70,40 @@ const defaultPosts: BlogPost[] = [
   { id: '5', title: 'A/B Testing on Steroids: Leveraging AI', slug: 'ab-testing-ai', category: 'Performance Marketing', date: 'Sep 02, 2026', excerpt: 'Take the guesswork out of your campaigns by letting AI automate your A/B testing and creative optimization.', image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=800&q=80', status: 'Published' },
   { id: '6', title: 'Data-Driven Decisions: The Core of Marketing', slug: 'data-driven-marketing', category: 'Performance Marketing', date: 'Aug 20, 2026', excerpt: 'Why clean data and accurate tracking remain the undisputed champions of successful performance marketing.', image: 'https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&w=800&q=80', status: 'Published' },
 ];
+
+
+const defaultSiteContent: SiteContent = {
+  home: {
+    heroTag: "AI-Powered Digital Agency",
+    heroTitle1: "Transform",
+    heroTitle2: "Your",
+    heroTitleHighlight: "Digital Presence",
+    heroDesc: "We build high-performance websites and execute data-driven performance marketing campaigns powered by cutting-edge artificial intelligence.",
+    ctaPrimary: "Start Your Project",
+    ctaSecondary: "View Our Work"
+  },
+  about: {
+    heroTag: "About Us",
+    heroTitle: "Building the Future of",
+    heroTitleHighlight: "Digital Experiences",
+    heroDesc: "We are a team of visionary designers, developers, and AI specialists dedicated to pushing the boundaries of what's possible on the web."
+  },
+  services: {
+    heroTitle: "Digital Solutions for the",
+    heroTitleHighlight: "AI Era",
+    heroDesc: "We leverage cutting-edge technology and artificial intelligence to deliver solutions that drive measurable growth."
+  },
+  pricing: {
+    heroTitle: "Simple, transparent",
+    heroTitleHighlight: "pricing",
+    heroDesc: "Choose the perfect plan for your business needs. No hidden fees or surprises."
+  },
+  contact: {
+    heroTitle: "Let's build something",
+    heroTitleHighlight: "amazing",
+    heroDesc: "Ready to take your digital presence to the next level? Get in touch with us today."
+  }
+};
 
 const defaultSettings: SiteSettings = {
   siteName: 'Pauls Digital Studio',
@@ -97,6 +143,20 @@ export function CMSProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('cms_settings_v4', JSON.stringify(settings));
   }, [settings]);
 
+  
+  const [siteContent, setSiteContentState] = useState<SiteContent>(() => {
+    const saved = localStorage.getItem('cms_site_content_v1');
+    return saved ? JSON.parse(saved) : defaultSiteContent;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('cms_site_content_v1', JSON.stringify(siteContent));
+  }, [siteContent]);
+
+  const updateSiteContent = (page: string, data: PageContentData) => {
+    setSiteContentState(prev => ({ ...prev, [page]: { ...prev[page], ...data } }));
+  };
+
   const addProject = (project: Project) => setProjectsState(prev => [...prev, project]);
   const deleteProject = (id: string) => setProjectsState(prev => prev.filter(p => p.id !== id));
   
@@ -110,7 +170,8 @@ export function CMSProvider({ children }: { children: ReactNode }) {
     <CMSContext.Provider value={{
       projects, setProjects: setProjectsState, addProject, deleteProject,
       posts, setPosts: setPostsState, addPost, updatePost, deletePost,
-      settings, updateSettings
+      settings, updateSettings,
+      siteContent, updateSiteContent
     }}>
       {children}
     </CMSContext.Provider>
