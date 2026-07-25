@@ -10,6 +10,16 @@ export interface Project {
   url: string;
 }
 
+export interface ContactMessage {
+  id: string;
+  name: string;
+  email: string;
+  service: string;
+  message: string;
+  date: string;
+  read: boolean;
+}
+
 export interface BlogPost {
   id: string;
   title: string;
@@ -51,6 +61,11 @@ interface CMSContextType {
   addPost: (post: BlogPost) => void;
   updatePost: (post: BlogPost) => void;
   deletePost: (id: string) => void;
+
+  messages: ContactMessage[];
+  addMessage: (message: Omit<ContactMessage, 'id' | 'date' | 'read'>) => void;
+  markMessageRead: (id: string) => void;
+  deleteMessage: (id: string) => void;
 
   settings: SiteSettings;
   updateSettings: (settings: Partial<SiteSettings>) => void;
@@ -125,6 +140,28 @@ export function CMSProvider({ children }: { children: ReactNode }) {
     return saved ? JSON.parse(saved) : defaultPosts;
   });
 
+  const [messages, setMessagesState] = useState<ContactMessage[]>(() => {
+    const saved = localStorage.getItem('cms_messages_v1');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('cms_messages_v1', JSON.stringify(messages));
+  }, [messages]);
+
+  const addMessage = (message: Omit<ContactMessage, 'id' | 'date' | 'read'>) => {
+    setMessagesState(prev => [
+      { ...message, id: Date.now().toString(), date: new Date().toISOString(), read: false },
+      ...prev
+    ]);
+  };
+  const markMessageRead = (id: string) => {
+    setMessagesState(prev => prev.map(m => m.id === id ? { ...m, read: true } : m));
+  };
+  const deleteMessage = (id: string) => {
+    setMessagesState(prev => prev.filter(m => m.id !== id));
+  };
+
   const [settings, setSettingsState] = useState<SiteSettings>(() => {
     const saved = localStorage.getItem('cms_settings_v4');
     return saved ? JSON.parse(saved) : defaultSettings;
@@ -170,6 +207,7 @@ export function CMSProvider({ children }: { children: ReactNode }) {
     <CMSContext.Provider value={{
       projects, setProjects: setProjectsState, addProject, deleteProject,
       posts, setPosts: setPostsState, addPost, updatePost, deletePost,
+      messages, addMessage, markMessageRead, deleteMessage,
       settings, updateSettings,
       siteContent, updateSiteContent
     }}>

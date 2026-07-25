@@ -39,8 +39,27 @@ export function Home() {
               animate="animate"
               variants={staggerContainer}
             >
-              <motion.div variants={fadeIn} className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider mb-6">
-                AI-Powered Digital Agency
+              <motion.div 
+                variants={{
+                  initial: { opacity: 0, y: 20 },
+                  animate: { 
+                    opacity: 1, 
+                    y: [0, -4, 0],
+                    boxShadow: [
+                      "0px 0px 0px 0px rgba(91, 92, 235, 0)",
+                      "0px 0px 15px 2px rgba(91, 92, 235, 0.3)",
+                      "0px 0px 0px 0px rgba(91, 92, 235, 0)"
+                    ],
+                    transition: { 
+                      opacity: { duration: 0.5 },
+                      y: { repeat: Infinity, duration: 3, ease: "easeInOut", delay: 0.5 },
+                      boxShadow: { repeat: Infinity, duration: 3, ease: "easeInOut", delay: 0.5 }
+                    }
+                  }
+                }}
+                className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider mb-6"
+              >
+                {home.heroTag}
               </motion.div>
               
               <motion.h1 

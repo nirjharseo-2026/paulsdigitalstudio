@@ -6,16 +6,34 @@ import { useCMS } from '../context/CMSContext';
 export function Contact() {
   const { siteContent } = useCMS();
   const { contact } = siteContent;
+  const { addMessage } = useCMS();
+
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    service: 'Website Development',
+    message: ''
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    
+    // Simulate network request
     setTimeout(() => {
+      addMessage({
+        name: `${formData.firstName} ${formData.lastName}`.trim(),
+        email: formData.email,
+        service: formData.service,
+        message: formData.message
+      });
       setIsSubmitting(false);
       setSubmitted(true);
-    }, 1500);
+      setFormData({ firstName: '', lastName: '', email: '', service: 'Website Development', message: '' });
+    }, 1000);
   };
 
   return (
@@ -87,22 +105,22 @@ export function Contact() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-medium">First Name</label>
-                  <input required type="text" className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow" placeholder="John" />
+                  <input required type="text" value={formData.firstName} onChange={e => setFormData({...formData, firstName: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow" placeholder="John" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Last Name</label>
-                  <input required type="text" className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow" placeholder="Doe" />
+                  <input required type="text" value={formData.lastName} onChange={e => setFormData({...formData, lastName: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow" placeholder="Doe" />
                 </div>
               </div>
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">Email Address</label>
-                <input required type="email" className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow" placeholder="john@example.com" />
+                <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow" placeholder="john@example.com" />
               </div>
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">Service Needed</label>
-                <select className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow">
+                <select value={formData.service} onChange={e => setFormData({...formData, service: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow">
                   <option>Website Development</option>
                   <option>E-commerce Solutions</option>
                   <option>SEO & Digital Marketing</option>
@@ -113,7 +131,7 @@ export function Contact() {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">Project Details</label>
-                <textarea required rows={4} className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow resize-none" placeholder="Tell us about your project..." />
+                <textarea required rows={4} value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow resize-none" placeholder="Tell us about your project..." />
               </div>
 
               <button 

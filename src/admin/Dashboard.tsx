@@ -1,13 +1,14 @@
 import { useCMS } from '../context/CMSContext';
-import { Users, FileText, Briefcase, TrendingUp } from 'lucide-react';
+import { Users, FileText, Briefcase, TrendingUp, MessageSquare } from 'lucide-react';
 
 export function Dashboard() {
-  const { projects, posts } = useCMS();
+  const { projects, posts, messages } = useCMS();
+  const unreadMessagesCount = messages.filter(m => !m.read).length;
 
   const stats = [
     { name: 'Total Projects', value: projects.length, icon: Briefcase, color: 'text-primary', bg: 'bg-primary/10' },
     { name: 'Blog Posts', value: posts.length, icon: FileText, color: 'text-secondary', bg: 'bg-secondary/10' },
-    { name: 'Total Visitors', value: '12,450', icon: Users, color: 'text-accent', bg: 'bg-accent/10' },
+    { name: 'Unread Messages', value: unreadMessagesCount, icon: MessageSquare, color: 'text-accent', bg: 'bg-accent/10' },
     { name: 'Conversion Rate', value: '4.2%', icon: TrendingUp, color: 'text-success', bg: 'bg-success/10' },
   ];
 

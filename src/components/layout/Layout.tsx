@@ -204,6 +204,7 @@ export function AdminLayout() {
     { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
     { name: 'Projects', path: '/admin/projects', icon: Briefcase },
     { name: 'Blog Posts', path: '/admin/blog', icon: FileText },
+    { name: 'Messages', path: '/admin/messages', icon: MessageSquare },
     { name: 'Pages', path: '/admin/pages', icon: FileText },
     { name: 'Settings', path: '/admin/settings', icon: Settings },
   ];
