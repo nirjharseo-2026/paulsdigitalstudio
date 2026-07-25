@@ -40,9 +40,34 @@ export function Home() {
                 AI-Powered Digital Agency
               </motion.div>
               
-              <motion.h1 variants={fadeIn} className="text-5xl md:text-7xl font-heading font-extrabold leading-[1.1] mb-6 tracking-tight text-foreground">
-                Transform Your <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">Digital Presence</span>
+              <motion.h1 
+                className="text-5xl md:text-7xl font-heading font-extrabold leading-[1.1] mb-6 tracking-tight text-foreground flex flex-wrap gap-x-3 gap-y-2"
+                variants={{
+                  animate: { transition: { staggerChildren: 0.1 } }
+                }}
+              >
+                {['Transform', 'Your'].map((word, idx) => (
+                  <motion.span 
+                    key={idx}
+                    variants={{
+                      initial: { opacity: 0, y: 40, rotate: 2 },
+                      animate: { opacity: 1, y: 0, rotate: 0, transition: { duration: 0.8, ease: [0.2, 0.65, 0.3, 0.9] } }
+                    }}
+                    className="inline-block"
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+                <div className="w-full h-0"></div>
+                <motion.span 
+                  variants={{
+                    initial: { opacity: 0, y: 40, rotate: 2 },
+                    animate: { opacity: 1, y: 0, rotate: 0, transition: { duration: 0.8, ease: [0.2, 0.65, 0.3, 0.9] } }
+                  }}
+                  className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary inline-block"
+                >
+                  Digital Presence
+                </motion.span>
               </motion.h1>
               
               <motion.p variants={fadeIn} className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed max-w-lg">

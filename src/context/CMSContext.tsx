@@ -37,6 +37,7 @@ interface CMSContextType {
   posts: BlogPost[];
   setPosts: (posts: BlogPost[]) => void;
   addPost: (post: BlogPost) => void;
+  updatePost: (post: BlogPost) => void;
   deletePost: (id: string) => void;
 
   settings: SiteSettings;
@@ -96,18 +97,19 @@ export function CMSProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('cms_settings_v4', JSON.stringify(settings));
   }, [settings]);
 
-  const addProject = (project: Project) => setProjectsState([...projects, project]);
-  const deleteProject = (id: string) => setProjectsState(projects.filter(p => p.id !== id));
+  const addProject = (project: Project) => setProjectsState(prev => [...prev, project]);
+  const deleteProject = (id: string) => setProjectsState(prev => prev.filter(p => p.id !== id));
   
-  const addPost = (post: BlogPost) => setPostsState([...posts, post]);
-  const deletePost = (id: string) => setPostsState(posts.filter(p => p.id !== id));
+  const addPost = (post: BlogPost) => setPostsState(prev => [...prev, post]);
+  const updatePost = (post: BlogPost) => setPostsState(prev => prev.map(p => p.id === post.id ? post : p));
+  const deletePost = (id: string) => setPostsState(prev => prev.filter(p => p.id !== id));
 
-  const updateSettings = (newSettings: Partial<SiteSettings>) => setSettingsState({ ...settings, ...newSettings });
+  const updateSettings = (newSettings: Partial<SiteSettings>) => setSettingsState(prev => ({ ...prev, ...newSettings }));
 
   return (
     <CMSContext.Provider value={{
       projects, setProjects: setProjectsState, addProject, deleteProject,
-      posts, setPosts: setPostsState, addPost, deletePost,
+      posts, setPosts: setPostsState, addPost, updatePost, deletePost,
       settings, updateSettings
     }}>
       {children}
