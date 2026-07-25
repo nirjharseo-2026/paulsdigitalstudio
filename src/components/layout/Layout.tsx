@@ -37,8 +37,7 @@ export function Layout() {
     { name: 'Services', path: '/services' },
     { name: 'Portfolio', path: '/portfolio' },
     { name: 'Pricing', path: '/pricing' },
-    { name: 'Blog', path: '/blog' },
-    { name: 'Admin', path: '/admin' }
+    { name: 'Blog', path: '/blog' }
   ];
 
   return (
@@ -60,7 +59,7 @@ export function Layout() {
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-8">
+            <nav className="hidden md:flex items-center gap-8 relative">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
@@ -73,6 +72,7 @@ export function Layout() {
                   {link.name}
                 </Link>
               ))}
+              <Link to="/admin" className="opacity-0 w-4 h-4 absolute -right-6 text-[0px]">Admin</Link>
             </nav>
 
             <div className="flex items-center gap-4">
@@ -160,6 +160,7 @@ export function Layout() {
                 <li><Link to="/services" className="hover:text-primary transition-colors">Services</Link></li>
                 <li><Link to="/portfolio" className="hover:text-primary transition-colors">Portfolio</Link></li>
                 <li><Link to="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
+                <li><Link to="/admin" className="hover:text-primary transition-colors">Admin Login</Link></li>
               </ul>
             </div>
             
@@ -193,6 +194,11 @@ export function Layout() {
 export function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const location = useLocation();
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return sessionStorage.getItem('admin_auth') === 'true';
+  });
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const adminLinks = [
     { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
@@ -200,6 +206,66 @@ export function AdminLayout() {
     { name: 'Blog Posts', path: '/admin/blog', icon: FileText },
     { name: 'Settings', path: '/admin/settings', icon: Settings },
   ];
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === 'Admin@#696634') {
+      setIsAuthenticated(true);
+      sessionStorage.setItem('admin_auth', 'true');
+      setError('');
+    } else {
+      setError('Invalid access key');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    sessionStorage.removeItem('admin_auth');
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-card p-8 rounded-3xl shadow-xl max-w-md w-full border border-border"
+        >
+          <div className="text-center mb-8">
+            <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mx-auto mb-4">
+              <Settings className="w-6 h-6" />
+            </div>
+            <h1 className="text-2xl font-bold font-heading mb-2">Admin Access</h1>
+            <p className="text-muted-foreground text-sm">Please enter your access key to continue.</p>
+          </div>
+          
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <input 
+                type="password" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Access Key" 
+                className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+            {error && <p className="text-red-500 text-sm text-center font-medium">{error}</p>}
+            <button 
+              type="submit"
+              className="w-full bg-primary text-primary-foreground py-3 rounded-xl font-semibold hover:bg-primary/90 transition-colors"
+            >
+              Verify Access
+            </button>
+            <div className="pt-4 text-center">
+              <Link to="/" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center justify-center gap-1">
+                <ArrowRight className="w-4 h-4 rotate-180" /> Return to Site
+              </Link>
+            </div>
+          </form>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-muted/30 flex">
@@ -235,11 +301,17 @@ export function AdminLayout() {
           })}
         </div>
         
-        <div className="absolute bottom-4 left-4 right-4">
+        <div className="absolute bottom-4 left-4 right-4 space-y-2">
           <Link to="/" className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg border border-border text-sm font-medium hover:bg-muted transition-colors">
             Exit Admin
             <ArrowRight className="w-4 h-4" />
           </Link>
+          <button 
+            onClick={handleLogout}
+            className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-sm font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
+          >
+            Log Out
+          </button>
         </div>
       </aside>
 

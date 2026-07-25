@@ -8,6 +8,7 @@ import { Layout, AdminLayout } from './components/layout/Layout';
 import { Home } from './pages/Home';
 import { Portfolio } from './pages/Portfolio';
 import { Blog } from './pages/Blog';
+import { BlogPost } from './pages/BlogPost';
 import { Contact } from './pages/Contact';
 import { Services } from './pages/Services';
 import { Pricing } from './pages/Pricing';
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="portfolio" element={<Portfolio />} />
             <Route path="pricing" element={<Pricing />} />
             <Route path="blog" element={<Blog />} />
+            <Route path="blog/:slug" element={<BlogPost />} />
             <Route path="contact" element={<Contact />} />
             <Route path="case-studies" element={<PlaceholderPage title="Case Studies" description="In-depth analysis of how we helped businesses achieve their goals." />} />
             <Route path="faq" element={<PlaceholderPage title="Frequently Asked Questions" description="Find answers to common questions about our services." />} />

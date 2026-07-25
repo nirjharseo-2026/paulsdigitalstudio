@@ -38,7 +38,8 @@ export function Contact() {
           <div className="space-y-8">
             {[
               { icon: Mail, title: 'Email Us', info: 'paulsdigitalstudio.info@gmail.com' },
-              { icon: MapPin, title: 'Visit Us', info: '123 Innovation Drive, Tech City, TC 10010' },
+              { icon: MapPin, title: 'Location', info: 'Dhaka, Bangladesh.' },
+              { icon: MessageSquare, title: 'WhatsApp', info: '+880 1914744022' },
             ].map((item, i) => (
               <motion.div 
                 key={i}
